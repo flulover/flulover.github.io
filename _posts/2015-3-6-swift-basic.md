@@ -10,6 +10,7 @@ Swift是苹果平台的新语言，语法比Object-C更加简化，开发效率�
 下面详细列出一些比较有意思的地方：
 
 1.
+
 {% highlight swift %}
 let i = 1; // 常量 i += 1; 会报错
 var i = 1; // 变量
@@ -98,3 +99,4 @@ class Person
 let yzzhou = Person(name:"Yzzhou", age:29); // This is stupid, why I need to specify. But it dosen't need new keywork.
 yzzhou.dump();
 {% endhighlight %}
+
