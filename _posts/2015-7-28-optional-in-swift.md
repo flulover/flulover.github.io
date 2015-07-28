@@ -29,14 +29,14 @@ println(message.isEmpty)
 
 第一种
 {% highlight swift linenos=table %}
-// 程序员主动确认message有可能为空。如果message为nil，则返回nil；如果message有值，则为返回Optional对象，包裹的是对应的值。
-println(message?.isEmpty) 
+// 程序员主动确认message不可能为空。如果message为nil，则运行时错误；如果message有值，则返回对应的值。
+println(message!.isEmpty) 
 {% endhighlight %}
 
 第二种
 {% highlight swift linenos=table %}
-// 程序员主动确认message不可能为空。如果message为nil，则运行时错误；如果message有值，则返回对应的值。
-println(message!.isEmpty) 
+// 程序员主动确认message有可能为空。如果message为nil，则返回nil；如果message有值，则为返回Optional对象，包裹的是对应的值。
+println(message?.isEmpty) 
 {% endhighlight %}
 
 Optional的出现就是为了让程序员更早的在编译器发现问题，然后进行及时的确认。
