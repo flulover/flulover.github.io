@@ -105,4 +105,5 @@ enum Optional<T> : Reflectable, NilLiteralConvertible {
 
 ###Reference
 
-[Optional Type in Swift for beginners](http://www.appcoda.com/beginners-guide-optionals-swift/)
+* [Optional Type in Swift for beginners](http://www.appcoda.com/beginners-guide-optionals-swift/)
+* [Learning Swift: Optional Types](http://lithium3141.com/blog/2014/06/19/learning-swift-optional-types/)
