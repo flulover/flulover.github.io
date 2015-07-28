@@ -1,102 +1,108 @@
 ---
 layout: post
-title: Swift简介
+title: Optional in Swift
 ---
-Swift是苹果平台的新语言，语法比Object-C更加简化，开发效率也会更高。这两天快速学习了下Swift，用XCode的PlayGround写了两个小程序，分别关于基本数据类型和面向对象的部分。
+###为什么要有Optional
 
-* [Swift Basic](https://github.com/flulover/LearnSwift/blob/master/Basic.playground/section-1.swift)
-* [Swift OO](https://github.com/flulover/LearnSwift/blob/master/SwiftOO.playground/section-1.swift)
+一项新技术的出现肯定是有其背景原因。作为程序员我们希望尽早发现我们代码中的问题。能在编译器阶段发现的，就不在运行时阶段发现。
 
-下面详细列出一些比较有意思的地方：
+看下面Objective-C代码:
 
-1.
-
-{% highlight swift %}
-let i = 1; // 常量 i += 1; 会报错
-var i = 1; // 变量
+{% highlight objective-c linenos=table %}
+NSString *message = @"Objective-C will never die!";
+message = nil;
+NSLog(message.isEmpty) // 运行时出错
 {% endhighlight %}
 
-2.
-{% highlight swift %}
-let i = 1; // 编译器可以自动推断出类型
-let i:Integer = 1; // 也可以显示指定
+如何能在编译器就发现这个问题呢，Optional出场了。我们看下Swift代码。
+
+{% highlight swift linenos=table %}
+// 表示message是一个optional对象，message的值可能为nil，也可能是一个字符串。
+var message:String? = "Swift will find out the error!"
+// message可以赋值nil
+message = nil
+// 编译错误, message为Optional对象，不能直接取isEmpty值。需要进行unwrapped操作，同事也给程序员一个机会确认自己代码的正确性
+println(message.isEmpty)
 {% endhighlight %}
 
-3.
-{% highlight swift %}
-let names:[String] = ["Ted","YuanZheng", "Other name"]; // 数组（显示）
-for name in names {
-    println(name);
+如何处理这个编译错误？两种方式。
+
+第一种
+{% highlight swift linenos=table %}
+// 程序员主动确认message有可能为空。如果message为nil，则返回nil；如果message有值，则为返回Optional对象，包裹的是对应的值。
+println(message?.isEmpty) 
+{% endhighlight %}
+
+第二种
+{% highlight swift linenos=table %}
+// 程序员主动确认message不可能为空。如果message为nil，则运行时错误；如果message有值，则返回对应的值。
+println(message!.isEmpty) 
+{% endhighlight %}
+
+Optional的出现就是为了让程序员更早的在编译器发现问题，然后进行及时的确认。
+
+###Optional语法
+
+####Optional的声明
+{% highlight swift linenos=table %}
+// 声明str为一个Optional String类型。str有可能是nil，有可能是一个字符串。
+var str:String? = "I am a string"
+{% endhighlight %}
+
+####Optional的unwrapped操作
+Optional里面包了一个值，如果不为nil，要取里面的值，则需要unwrapped操作。
+{% highlight swift linenos=table %}
+// 隐试的unwrapped。如果str为nil，则不进入if语句；如果有值，则unwrappedStr为optional包含的值。
+if unwrappedStr = str{
+    println(unwrappedStr)    
 }
 {% endhighlight %}
 
-4.
-{% highlight swift %}
-let persons = ["Ted": 18, "YuanZheng": 29, "Other Name": 100]; // 字典对象
-for (name, age) in persons {
-    println("\(name):\(age)");
+{% highlight swift linenos=table %}
+// 显示的unwrapped
+println(str!)
+{% endhighlight %}
+
+#### Optional中的?和!
+{% highlight swift linenos=table %}
+var str:String? = "I am a string"
+// 必须unwrapped，然后才能引用到值。
+println(str!)
+
+// String!表示也是Optional类型，但是表示隐式的unwrapped，所以可以直接引用对应值。
+var str:String! = "I am a string"
+println(str)
 {% endhighlight %}
 
 
-5.
-{% highlight Objective-C %}
-if is_log_open { // 不需要空格
-    println("Log is opened");
+###Optional源码
+{% highlight swift linenos=table %}
+enum Optional<T> : Reflectable, NilLiteralConvertible {
+    case None
+    case Some(T)
+
+    /// Construct a `nil` instance.
+    init()
+
+    /// Construct a non-\ `nil` instance that stores `some`.
+    init(_ some: T)
+
+    /// If `self == nil`, returns `nil`.  Otherwise, returns `f(self!)`.
+    func map<U>(f: @noescape (T) -> U) -> U?
+
+    /// Returns `f(self)!` iff `self` and `f(self)` are not nil.
+    func flatMap<U>(f: @noescape (T) -> U?) -> U?
+
+    /// Returns a mirror that reflects `self`.
+    func getMirror() -> MirrorType
+
+    /// Create an instance initialized with `nil`.
+    init(nilLiteral: ())
 }
 {% endhighlight %}
-
-6.
-{% highlight Objective-C  %}
-for index in 1...5 { // 范围用...表示
-    println(index);
-}
-{% endhighlight %}
-
-7.
-
-{% highlight Objective-C %}
-let option = 2;
-switch option{
-case 1, 2: // 多个选择，不需要break，默认自动跳出switch
-    println("Option is 1 or 2");
-    // Do not need break here
-case 3:
-    println("Option is 3");
-default:
-    println("Option is default");
-}
-{% endhighlight %}
-
-8.
-
-{% highlight Objective-C %}
-class Person
-{
-    let name: String;
-    let age: Int;
-
-    init(){ // 构造函数名字指定为init
-        name = "Ted";
-        age = 29;
-    }
-
-    init(name:String, age:Int){ // Paramater declaration is still the old way, this is suck!
-        self.name = name;
-        self.age = age;
-    }
+从声明上看，Optional其实是一个模板enum。从继承关系来看，它可以反射，可以被设置成nil。有两种值，一种是None(nil)，一种是有模板参数类型的值。
 
 
-    func dump(){ // func is the function keywork
-        println(fullName());
-    }
+###Reference
 
-    func fullName() -> String { // Stupid Swift, what about "String fullName()". Maybe the Swift designer want to keep the consistent with
-        return "\(name):\(age)";
-    }
-}
-
-
-let yzzhou = Person(name:"Yzzhou", age:29); // This is stupid, why I need to specify. But it dosen't need new keywork.
-yzzhou.dump();
-{% endhighlight %}
-
+[Optional Type in Swift for beginners](http://www.appcoda.com/beginners-guide-optionals-swift/)
