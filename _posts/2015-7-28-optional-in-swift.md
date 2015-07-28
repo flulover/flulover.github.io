@@ -4,24 +4,24 @@ title: Optional in Swift
 ---
 ###为什么要有Optional
 
-一项新技术的出现肯定是有其背景原因。作为程序员我们希望尽早发现我们代码中的问题。能在编译器阶段发现的，就不在运行时阶段发现。
+一项新技术的出现肯定是有其背景原因。作为程序员我们希望尽早发现我们代码中的问题，在编译阶段发现比在运行时发现好。
 
 看下面Objective-C代码:
 
 {% highlight objective-c linenos=table %}
 NSString *message = @"Objective-C will never die!";
 message = nil;
-NSLog(message.isEmpty) // 运行时出错
+NSLog(message.isEmpty()) // 运行时出错
 {% endhighlight %}
 
-如何能在编译器就发现这个问题呢，Optional出场了。我们看下Swift代码。
+如何能在编译器就发现这个问题呢，Optional出场了。我们看下Swift代码：
 
 {% highlight swift linenos=table %}
-// 表示message是一个optional对象，message的值可能为nil，也可能是一个字符串。
+// message有可能为nil，用Optional来表示message。
 var message:String? = "Swift will find out the error!"
 // message可以赋值nil
 message = nil
-// 编译错误, message为Optional对象，不能直接取isEmpty值。需要进行unwrapped操作，同事也给程序员一个机会确认自己代码的正确性
+// 编译错误, message为Optional对象，不能直接取isEmpty值。需要进行unwrapped操作，同时也给程序员一个机会确认自己代码的正确性
 println(message.isEmpty)
 {% endhighlight %}
 
