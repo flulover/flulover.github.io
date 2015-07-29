@@ -11,19 +11,19 @@ Swift是苹果平台的新语言，语法比Object-C更加简化，开发效率�
 
 1.
 
-{% highlight swift %}
+{% highlight swift linenos=table %}
 let i = 1; // 常量 i += 1; 会报错
 var i = 1; // 变量
 {% endhighlight %}
 
 2.
-{% highlight swift %}
+{% highlight swift linenos=table%}
 let i = 1; // 编译器可以自动推断出类型
 let i:Integer = 1; // 也可以显示指定
 {% endhighlight %}
 
 3.
-{% highlight swift %}
+{% highlight swift linenos=table%}
 let names:[String] = ["Ted","YuanZheng", "Other name"]; // 数组（显示）
 for name in names {
     println(name);
@@ -31,7 +31,7 @@ for name in names {
 {% endhighlight %}
 
 4.
-{% highlight swift %}
+{% highlight swift linenos=table%}
 let persons = ["Ted": 18, "YuanZheng": 29, "Other Name": 100]; // 字典对象
 for (name, age) in persons {
     println("\(name):\(age)");
@@ -39,14 +39,14 @@ for (name, age) in persons {
 
 
 5.
-{% highlight Objective-C %}
+{% highlight swift linenos=table %}
 if is_log_open { // 不需要空格
     println("Log is opened");
 }
 {% endhighlight %}
 
 6.
-{% highlight Objective-C  %}
+{% highlight swift linenos=table %}
 for index in 1...5 { // 范围用...表示
     println(index);
 }
@@ -54,7 +54,7 @@ for index in 1...5 { // 范围用...表示
 
 7.
 
-{% highlight Objective-C %}
+{% highlight swift linenos=table %}
 let option = 2;
 switch option{
 case 1, 2: // 多个选择，不需要break，默认自动跳出switch
@@ -69,7 +69,7 @@ default:
 
 8.
 
-{% highlight Objective-C %}
+{% highlight swift linenos=table %}
 class Person
 {
     let name: String;
