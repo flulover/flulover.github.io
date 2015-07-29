@@ -16,26 +16,28 @@ NSLog(message.isEmpty()) // 运行时出错
 
 如何能在编译器就发现这个问题呢，Optional出场了。我们看下Swift代码：
 
-{% highlight swift linenos=table %}
+{% highlight swift  linenos=table %}
 // message有可能为nil，用Optional来表示message。
 var message:String? = "Swift will find out the error!"
 // message可以赋值nil
 message = nil
-// 编译错误, message为Optional对象，不能直接取isEmpty值。需要进行unwrapped操作，同时也给程序员一个机会确认自己代码的正确性
+// 编译错误, message为Optional对象，不能直接取isEmpty值。
+// 需要进行unwrapped操作，同时也给程序员一个机会确认自己代码的正确性
 println(message.isEmpty)
 {% endhighlight %}
 
 如何处理这个编译错误？两种方式。
 
 第一种
-{% highlight swift linenos=table %}
+{% highlight swift  linenos=table %}
 // 程序员主动确认message不可能为空。如果message为nil，则运行时错误；如果message有值，则返回对应的值。
 println(message!.isEmpty) 
 {% endhighlight %}
 
 第二种
 {% highlight swift linenos=table %}
-// 程序员主动确认message有可能为空。如果message为nil，则返回nil；如果message有值，则为返回Optional对象，包裹的是对应的值。
+// 程序员主动确认message有可能为空。
+// 如果message为nil，则返回nil；如果message有值，则为返回Optional对象，包裹的是对应的值。
 println(message?.isEmpty) 
 {% endhighlight %}
 
@@ -51,7 +53,7 @@ var str:String? = "I am a string"
 
 ####Optional的unwrapped操作
 Optional里面包了一个值，如果不为nil，要取里面的值，则需要unwrapped操作。
-{% highlight swift linenos=table %}
+{% highlight swift linenos=table  %}
 // 隐试的unwrapped。如果str为nil，则不进入if语句；如果有值，则unwrappedStr为optional包含的值。
 if unwrappedStr = str{
     println(unwrappedStr)    

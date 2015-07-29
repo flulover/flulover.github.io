@@ -65,6 +65,8 @@ kbd,
 pre,
 samp {
   margin: 1em 0;
+  font-size:13px;
+  font-family:'Andale Mono', AndaleMono;
 }
 dt {
   font-weight: bold;
@@ -103,4 +105,34 @@ img[align=left] {
 }
 img[align=right] {
   margin-left: 3%;
+}
+
+code {
+  /* Dark */
+  background: #002b36;
+  color: #93a1a1;
+  /* Light */
+  background: #fdf6e3;
+  color: #586e75;
+}
+
+.highlighttable {
+  width: 100%;
+  padding: 0 60px 0 36px !important;
+  /* Dark */
+  background: #002b36;
+  color: #93a1a1;
+  /* Light */
+  background: #fdf6e3;
+  color: #586e75;
+}
+
+.highlighttable .linenos {
+  width: 24px;
+}
+
+.highlighttable pre {
+  padding: 10px 0;
+  color: #586e75;
+  line-height: 1.3em;
 }
